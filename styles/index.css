@@ -5,11 +5,16 @@
   list-style: none;
   font-family: 'Poppins',sans-serif;
 }
+html{
+    scroll-behavior: smooth;
+}
+
+
 main{
     height: 100vh;
     width: 100vw;
-    overflow: none;
-    background-color: yellow;
+    overflow: hidden !important;
+    position: relative;
 }
 main h1{
     text-align: center;
@@ -27,6 +32,7 @@ main h1{
 form{
     min-width: 380px;
     width: 480px;
+    transition: all 0.25s ease-in;
     margin: 10px auto;
     /* background-color: red; */
 }
@@ -38,6 +44,8 @@ form input{
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
     border:none;
+    color: hsl(0, 0%, 17%);
+    transition: all 0.25s ease-in;
 }
 form button{
     border-radius: 10px;
@@ -49,6 +57,7 @@ form button{
     background-color: #000;
     color: #fff;
     font-weight: bold;
+    transition: all 0.25s ease-in;
     font-size: 14px;
 }
 .ip-details{
@@ -57,15 +66,17 @@ form button{
     margin: 0 auto;
     background-color: rgb(255, 255, 255);
     display: flex;
+    transition: all 0.25s ease-in;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.25s ease-in;
     transform: translateY(70px);
-
+    height: 120px;
 }
 .ip-details li{
     position: relative;
     padding: 20px 30px;
-
+    transition: all 0.25s ease-in;
 }
 .ip-details li::after{
     position: absolute;
@@ -82,27 +93,111 @@ form button{
     background-color: transparent;
 }
 
-
-/* 
-filler background
-li:nth-child(1) span{
-    color: red;
-    background-color: rgba(226, 219, 219, 0.81);
-    transform: translateX(20px);
-    height: 15px;
-    width: 100%;
-    display: inline-block;
-     filter:blur(2px);
-     position: relative;
+  ul span{
+      font-weight: bold;
+      font-weight: 20px;
+      color: hsl(0, 0%, 17%);
+  }
+  ul p{
+      font-size: 12px;
+      text-transform: uppercase;
+      color: hsl(0, 0%, 59%);
+      font-weight: bold;
+      letter-spacing: 3px;
+  }
+.error-msg{
+    color: rgb(204, 45, 45);
+    text-shadow: 1px 1px 1px #0e020254;
+    font-weight: bold;
+    font-size: 14px;
 }
-li:nth-child(1) span::after{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    content: '';
+
+@media screen and (max-width:1060px){
+    .ip-details{
+        width: 600px;
+    }
+}
+
+@media screen and (max-width:700px){
+    .ip-details{
+        width: 330px;
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+        transform: translateY(100px);
+    }
+    .ip-section{
+        padding: 20px 30px;
+    }
+    .ip-details li::after{
+        background-color: transparent;
+    }
+}
+@media screen and (max-width:530px){
+    form{
+        width: auto;
+    }
+    form input{
+        width: 80%;
+    }
+}
+@media screen and (max-width:530px){
+    form input{
+        width: auto;
+    }
+}
+
+.map-section{
+    background-color: #000;
+    background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80');
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: -3;
+    position: relative;
+}
+
+.map-section.default{
+    filter: blur(2px);
+}
+
+/* css spinner */
+/* https://loading.io/css/ */
+.overlay.hidden{
+    display: none;
+}
+.overlay {
+    display: inline-block;
     position: absolute;
     top: 50%;
-    left: -30%;
+    left: 50%;
     transform: translate(-50%,-50%);
-    background-color: rgba(226, 219, 219, 0.83);
-} */
+    width: 80px;
+    height: 80px;
+  }
+  .overlay:after {
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    margin: 8px;
+    box-sizing: border-box;
+    border: 32px solid #fff;
+    border-color: rgb(0, 0, 0) transparent rgb(255, 255, 255) transparent;
+    animation: overlay 1.2s infinite;
+  }
+  @keyframes overlay {
+    0% {
+      transform: rotate(0);
+      animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+    50% {
+      transform: rotate(900deg);
+      animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    100% {
+      transform: rotate(1800deg);
+    }
+  }
