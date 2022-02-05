@@ -1,4 +1,10 @@
 const form = document.querySelector('form')
+let ipDisplay = document.querySelector('.ip-display');
+let  ipAddress = document.querySelector('.ip-address')
+let  ipIsp = document.querySelector('.ip-isp')
+let  iptimeZone = document.querySelector('.ip-timeZone')
+
+
 const overlay = document.querySelector('.overlay')
 form.addEventListener('submit',function (e){
   e.preventDefault()
@@ -23,7 +29,6 @@ if(regexExp.test(inputData)){
  }
 
 })
-// 192.212.174.101 
 
 const ipData = async (inputData='8.8.8') =>{
    const data= await fetch(`https://geo.ipify.org/api/v2/country?apiKey=at_ej8ONrT2E7rC02ncS4hEfErduuexo&ipAddress=${inputData}`)
@@ -43,10 +48,7 @@ const ipData = async (inputData='8.8.8') =>{
 
 function createData(ip,isp,country,region,timezone){
     //select corresponding tags
-    let ipDisplay = document.querySelector('.ip-display');
-    let  ipAddress = document.querySelector('.ip-address')
-    let  ipIsp = document.querySelector('.ip-isp')
-    let  iptimeZone = document.querySelector('.ip-timeZone')
+
      
     let ipSpan = document.createElement('span')
     let ispSpan = document.createElement('span')
@@ -69,3 +71,15 @@ function createData(ip,isp,country,region,timezone){
     overlay.classList.add('hidden')
 
 }
+
+var map = L.map('map').setView([51.505, -0.09], 13);
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoiY2Fyb2wwMSIsImEiOiJja3o5bm42dXUwM3FuMm9zNjhha3E3M21qIn0.l8lCE5iB5ZCn-OhDnjCmpA'
+}).addTo(map);
+
+L.marker([51.505, -0.09]).addTo(map).bindPopup('<b>Hello world </b>').openPopup()
