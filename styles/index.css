@@ -225,7 +225,7 @@ form button{
 
 @media screen and (max-width:470px){
     form input{
-        width: 65%;
+        width: 59%;
         margin: 0 auto;
     }
 }
