@@ -50,11 +50,11 @@ function createData(ip,isp,country,region,timezone){
     //select corresponding tags
 
      
-    let ipSpan = document.createElement('span')
-    let ispSpan = document.createElement('span')
-    let countrySpan = document.createElement('span')
-    let regionSpan = document.createElement('span')
-    let timeZoneSpan = document.createElement('span')
+    const ipSpan = document.createElement('span')
+    const ispSpan = document.createElement('span')
+    const countrySpan = document.createElement('span')
+    const regionSpan = document.createElement('span')
+    const timeZoneSpan = document.createElement('span')
     
     //append info
 
@@ -72,14 +72,60 @@ function createData(ip,isp,country,region,timezone){
 
 }
 
-var map = L.map('map').setView([51.505, -0.09], 13);
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+
+
+function getLocation() {
+    navigator.geolocation ?  navigator.geolocation.getCurrentPosition(success, error) :
+     alert(`Allow Location Access`)
+  }
+
+  function success({ coords }) {
+    latitude = coords.latitude;
+    longitude = coords.longitude
+    let zoom = 5
+    callMap(latitude,longitude,zoom)
+  }
+
+  function error(err) {
+      //set a default error point
+    callMap(0.637178,18.984375,2)
+  }
+
+
+  function callMap(latitude,longitude,zoom){
+      //map to the document id of map
+// set view takes in lat and long and the zoom view
+var map = L.map('map').setView([latitude, longitude], zoom);
+//initialize map layer
+var osm = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiY2Fyb2wwMSIsImEiOiJja3o5bm42dXUwM3FuMm9zNjhha3E3M21qIn0.l8lCE5iB5ZCn-OhDnjCmpA'
-}).addTo(map);
+}).addTo(map)
+//marker suggests pin, and location,then add to map to show
+var newIcon = L.icon({
+    iconUrl : '../images/icon-location.svg',
+    iconSize : [25,30],
+})
+var singleMarker =L.marker([latitude, longitude],{icon:newIcon,draggable:true});
+var popup = singleMarker.bindPopup('<b> You are here </b>'+ singleMarker.getLatLng()).openPopup()
+popup.addTo(map)
 
-L.marker([51.505, -0.09]).addTo(map).bindPopup('<b>Hello world </b>').openPopup()
+//use leaflet tile layer provider to change map view (default is the tile layer line 78)
+// set the new tile layer to a variable as in line 78, then load it on the dom by using the addTo(map)
+var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map);
+        console.log('called')
+}
+
+map.on('click', onMapClick);
+  }
+  getLocation()
