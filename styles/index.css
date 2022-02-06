@@ -189,6 +189,7 @@ form button{
         text-align: center;
         height: auto;
         transform: translateY(100px);
+        padding: 20px 0;
     }
     .ip-section{
         padding: 20px 30px;
