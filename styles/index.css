@@ -32,7 +32,7 @@ main h1{
     background-size: cover;
 }
 form{
-    min-width: 380px;
+    min-width: 330px;
     width: 480px;
     transition: all 0.25s ease-in;
     margin: 10px auto;
@@ -140,15 +140,32 @@ form button{
 }
 @media screen and (max-width:530px){
     form{
-        width: auto;
+        /* width: auto; */
+        margin: 0;
+        transform: translateY(50px);
     }
     form input{
-        width: 80%;
+        width: 85%;
     }
 }
 @media screen and (max-width:530px){
     form input{
+        /* width: auto; */
+        padding: 15px 10px;
+        /* width: ; */
+    }
+    form button{
+        padding: 15px 20px;
+    }
+}
+
+@media screen and (max-width:480px){
+    form input{
         width: auto;
+        margin: 0 auto;
+    }
+    form button{
+        padding: 15px 20px;
     }
 }
 #map{

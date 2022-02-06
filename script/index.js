@@ -82,22 +82,22 @@ function getLocation() {
   function success({ coords }) {
     latitude = coords.latitude;
     longitude = coords.longitude
+    //to controll zoom of map
     let zoom = 5
     callMap(latitude,longitude,zoom)
   }
 
   function error(err) {
-      //set a default error point
+      //set a default error point, and a
     callMap(0.637178,18.984375,2)
   }
 
 
   function callMap(latitude,longitude,zoom){
-      //map to the document id of map
-// set view takes in lat and long and the zoom view
-var map = L.map('map').setView([latitude, longitude], zoom);
+      //map to the document id of map set view takes in lat and long and the zoom view
+let map = L.map('map').setView([latitude, longitude], zoom);
 //initialize map layer
-var osm = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+let osm = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox/streets-v11',
@@ -105,27 +105,28 @@ var osm = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?a
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiY2Fyb2wwMSIsImEiOiJja3o5bm42dXUwM3FuMm9zNjhha3E3M21qIn0.l8lCE5iB5ZCn-OhDnjCmpA'
 }).addTo(map)
+
 //marker suggests pin, and location,then add to map to show
-var newIcon = L.icon({
+let newIcon = L.icon({
     iconUrl : '../images/icon-location.svg',
     iconSize : [25,30],
 })
-var singleMarker =L.marker([latitude, longitude],{icon:newIcon,draggable:true});
-var popup = singleMarker.bindPopup('<b> You are here </b>'+ singleMarker.getLatLng()).openPopup()
+let singleMarker =L.marker([latitude, longitude],{icon:newIcon,draggable:true});
+let popup = singleMarker.bindPopup('<b> You are here </b>'+ singleMarker.getLatLng()).openPopup()
 popup.addTo(map)
 
 //use leaflet tile layer provider to change map view (default is the tile layer line 78)
-// set the new tile layer to a variable as in line 78, then load it on the dom by using the addTo(map)
-var popup = L.popup();
+// set the new tile layer to a varable as in line 78, then load it on the dom by using the addTo(map)
+let popups = L.popup();
 
 function onMapClick(e) {
-    popup
+    popups
         .setLatLng(e.latlng)
         .setContent("You clicked the map at " + e.latlng.toString())
         .openOn(map);
-        console.log('called')
 }
 
 map.on('click', onMapClick);
-  }
-  getLocation()
+}
+
+getLocation()
